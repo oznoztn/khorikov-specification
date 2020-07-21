@@ -76,6 +76,8 @@ namespace UI.Movies
 
         private void Search()
         {
+            // Specification<Movie> spec = null;
+            // diyemeyiz çünkü alttaki ifadeler spec üzerinde çalışıyorlar.
             Specification<Movie> spec = Specification<Movie>.All;
 
             if (ForKidsOnly)
