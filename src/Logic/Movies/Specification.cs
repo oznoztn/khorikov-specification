@@ -29,6 +29,7 @@ namespace Logic.Movies
 
         public abstract Expression<Func<T, bool>> ToExpression();
 
+        // DİKKAT ET: Specification<T> döndürüyor, And<T> değil!
         public Specification<T> And(Specification<T> specification)
         {
             // Burada küçük bir optimizasyon yapıyoruz.
@@ -48,6 +49,7 @@ namespace Logic.Movies
             return new AndSpecification<T>(this, specification);
         }
 
+        // DİKKAT ET: Specification<T> döndürüyor, OrSpecification<T> değil!
         public Specification<T> Or(Specification<T> specification)
         {
             // Optimizasyon
@@ -57,13 +59,22 @@ namespace Logic.Movies
             return new OrSpecification<T>(this, specification);
         }
 
+        // DİKKAT ET: Specification<T> döndürüyor, NotSpecification<T> değil!
         public Specification<T> Not()
         {
             return new NotSpecification<T>(this);
         }
     }
 
+    // AND, OR, NOT ve IdentitySpecification spek. sınıflarının hepsinin INTERNAL olmasına dikkat et.
+    // Burada sağladığımız şey client kodunun bu objeleri asla direk olarak örnekleyememesini sağlamak
+    // Sadece Specification<T> sınıfında tanımladığımız metotlar aracılığıyla
+    //      bu objelerin sağladığı fonksiyonelliklere erişebiliyorlar.
+    // 
+    // Dikkat et Spec<T> sınıfındaki söz konusu metotlar Specification<T> tipini dönderiyor!
+    // Client AND, OR, NOTSpecification sınıflarında habersiz.
 
+    // INTERNAL olmasına dikkat.
     internal sealed class AndSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _left;
@@ -86,7 +97,7 @@ namespace Logic.Movies
         }
     }
 
-
+    // INTERNAL olmasına dikkat.
     internal sealed class OrSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _left;
