@@ -8,6 +8,8 @@ namespace Logic.Movies
     // Ne olursa olsun true dönderen bir predicate'in anlamı bütün nesneleri döndür demekle aynıdır, herhangi bir filtreleme yok.
     // Peki bunu neden oluşturduk o halde?
     // Bunun için MovieListViewModel sınıfı içerisindeki Search metodunu incele!
+
+    // Bunu Null Object Pattern'inin uygulanmasına örnek gösterebiliriz.
     internal sealed class IdentitySpecification<T> : Specification<T>
     {
         public override Expression<Func<T, bool>> ToExpression()
