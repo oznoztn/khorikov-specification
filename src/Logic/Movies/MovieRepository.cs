@@ -31,7 +31,7 @@ namespace Logic.Movies
                     .Skip(page * pageSize)
                     .Take(pageSize)
                     .Fetch(x => x.Director)
-                    .ToList()
+                    .ToList() // Sonuçları memory'ye al.
                     .Select(x => new MovieDto
                     {
                         Name = x.Name,
@@ -42,7 +42,7 @@ namespace Logic.Movies
                         Rating = x.Rating,
                         ReleaseDate = x.ReleaseDate
                     })
-                    .ToList();
+                    .ToList()
             }
         }
     }
