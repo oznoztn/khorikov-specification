@@ -31,8 +31,17 @@ namespace Logic.Movies
 
         public Specification<T> And(Specification<T> specification)
         {
+            // Burada küçük bir optimizasyon yapıyoruz.
+            // Bunun nedeni şu:
+            // Bütün nesneleri getirmek için IdentitySpecification kullandığımızda
+            // ORM, SQL cümlesinde fazladan bir tane Where ifadesi oluşturacaktır.
+            // Biz bu anlamsız ifadeyi neden sorgumuzda barındıralım ki?
+            // Yararı yok, belki minicik de olsa, zararı var.
+
+            // Eğer LEFT OPERAND, All spesifikasyonuya sadece RIGHT OPERAND'ı dönder. Left operand bir şey ifade etmiyor.
             if (this == All)
                 return specification;
+            // Tam tersi:
             if (specification == All)
                 return this;
 
@@ -41,6 +50,7 @@ namespace Logic.Movies
 
         public Specification<T> Or(Specification<T> specification)
         {
+            // Optimizasyon
             if (this == All || specification == All)
                 return All;
 
